@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Trabajos de React</title>
+    <style>
+        /* Estilos generales limpios, colores claros y sin sombras */
+        body {
+            background-color: #f7f9fa;
+            color: #222222;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 40px auto;
+        }
+
+        h1 {
+            font-size: 42px;
+            color: #0088cc;
+            margin-bottom: 15px;
+        }
+
+        p.subtitulo {
+            font-size: 22px;
+            color: #444444;
+            line-height: 1.5;
+            margin-top: 0;
+        }
+
+        /* Buscador claro y grande */
+        .buscador-contenedor {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        input[type="text"] {
+            font-size: 20px;
+            padding: 15px 20px;
+            width: 100%;
+            max-width: 500px;
+            border: 2px solid #cccccc;
+            border-radius: 8px;
+            background-color: #ffffff;
+            color: #222222;
+            outline: none;
+        }
+
+        input[type="text"]:focus {
+            border-color: #0088cc;
+        }
+
+/* Contenedor de proyectos */
+        .contenedor-proyectos {
+            max-width: 1200px; /* Ampliado para que entren bien las 3 columnas */
+            margin: 0 auto 30px auto;
+            min-height: 250px;
+            display: flex;         /* <-- Faltaba esto */
+            flex-wrap: wrap;       /* <-- Faltaba esto para que bajen a la siguiente fila */
+            gap: 20px;             /* Espacio separador entre tarjetas */
+        }
+        
+        
+        /* Tarjetas planas sin sombras */
+/* Tarjetas adaptables por filas con Flexbox */
+        .tarjeta {
+            background-color: #ffffff;
+            border: 2px solid #dddddd;
+            border-radius: 8px;
+            padding: 35px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            
+            /* Por defecto en móviles: 1 elemento por fila */
+            flex: 1 1 100%; 
+            box-sizing: border-box;
+        }
+
+        .tarjeta h2 {
+            font-size: 28px;
+            color: #111111;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .tarjeta p {
+            font-size: 20px;
+            color: #555555;
+            line-height: 1.5;
+            margin-bottom: 30px;
+        }
+
+        /* Botón claro y grande */
+        .boton {
+            background-color: #0088cc;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            padding: 15px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        .boton:hover {
+            background-color: #006699;
+        }
+
+        /* Sistema de Paginación */
+        .paginacion-contenedor {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .btn-pagina {
+            background-color: #ffffff;
+            color: #0088cc;
+            border: 2px solid #0088cc;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .btn-pagina:hover:not(:disabled) {
+            background-color: #0088cc;
+            color: #ffffff;
+        }
+
+        .btn-pagina:disabled {
+            border-color: #cccccc;
+            color: #aaaaaa;
+            cursor: not-allowed;
+            background-color: #f0f0f0;
+        }
+
+        .info-pagina {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333333;
+        }
+
+        /* Mensaje cuando no hay resultados */
+        .sin-resultados {
+            text-align: center;
+            font-size: 22px;
+            color: #666666;
+            display: none;
+            padding: 40px;
+            background-color: #ffffff;
+            border: 2px solid #dddddd;
+            border-radius: 8px;
+        }
+
+/* Tablet: 2 elementos por fila */
+        @media (min-width: 768px) {
+            .tarjeta {
+                flex: 1 1 calc(50% - 10px);
+            }
+        }
+
+        /* PC / Escrititorio: 3 elementos por fila */
+        @media (min-width: 1024px) {
+            .tarjeta {
+                flex: 1 1 calc(33.333% - 14px);
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Mis Trabajos de React</h1>
+        <p class="subtitulo">Panel central de navegación para explorar mis prácticas, componentes y aplicaciones desarrolladas paso a paso.</p>
+    </header>
+
+    <div class="buscador-contenedor">
+        <input type="text" id="buscador" placeholder="Buscar un proyecto..." onkeyup="filtrarYPaginar()">
+    </div>
+
+    <main class="contenedor-proyectos" id="gridProyectos">
+        
+        <div class="tarjeta" data-nombre="hola mundo estatico">
+    <div>
+        <h2>01. Hola Mundo Estático</h2>
+        <p>Introducción a JSX y renderizado de un componente funcional simple sin estado.</p>
+    </div>
+    <a href="./01-hola-mundo/index.html" class="boton">Ver Proyecto</a>
+</div>
+
+<div class="tarjeta" data-nombre="tarjeta de presentacion personal">
+    <div>
+        <h2>02. Tarjeta de Presentación</h2>
+        <p>Componente estático con estilos básicos en línea para mostrar datos personales fijos.</p>
+    </div>
+    <a href="./02-tarjeta-presentacion/index.html" class="boton">Ver Proyecto</a>
+</div>
+
+<div class="tarjeta" data-nombre="uso de props basicas">
+    <div>
+        <h2>03. Uso de Props Básicas</h2>
+        <p>Comunicación unidireccional de datos enviando atributos desde el componente padre al hijo.</p>
+    </div>
+    <a href="./03-props-basicas/index.html" class="boton">Ver Proyecto</a>
+</div>
+
+<div class="tarjeta" data-nombre="galeria con props reutilizables">
+    <div>
+        <h2>04. Galería Reutilizable</h2>
+        <p>Reutilización masiva de un componente hijo pasándole diferentes objetos mediante props.</p>
+    </div>
+    <a href="./04-galeria-props/index.html" class="boton">Ver Proyecto</a>
+</div>
+
+<div class="tarjeta" data-nombre="desestructuracion de props">
+    <div>
+        <h2>05. Desestructuración de Props</h2>
+        <p>Buenas prácticas extrayendo propiedades directamente en los parámetros de la función.</p>
+    </div>
+    <a href="./05-desestructuracion-props/index.html" class="boton">Ver Proyecto</a>
+</div>
+
+
+<div class="tarjeta" data-nombre="contador simple de react">
+    <div>
+        <h2>06. Contador Simple</h2>
+        <p>Introducción al hook useState para manejar memoria interna y eventos de clic (onClick).</p>
+    </div>
+    <a href="./06-contador-simple/index.html" class="boton">Ver Proyecto</a>
+</div>
+
+<div class="tarjeta" data-nombre="contador avanzado con limites">
+    <div>
+        <h2>07. Contador con Límites</h2>
+        <p>Lógica condicional aplicada al estado para evitar números negativos o máximos permitidos.</p>
+    </div>
+    <a href="./07-contador-limites/index.html" class="boton">Ver Proyecto</a>
+</div>
+
+<div class="tarjeta" data-nombre="interruptor de modo oscuro claro">
+    <div>
+        <h2>08. Interruptor de Tema</h2>
+        <p>Uso de estados booleanos (true/false) para alternar estilos visuales en toda la interfaz.</p>
+    </div>
+    <a href="./08-modo-oscuro/index.html" class="boton">Ver Proyecto</a>
+</div>
+
+<div class="tarjeta" data-nombre="mostrar y ocultar elementos toggle">
+    <div>
+        <h2>09. Mostrar y Ocultar Elementos</h2>
+        <p>Renderizado condicional básico mediante operadores lógicos y ternarios en JSX.</p>
+    </div>
+    <a href="./09-toggle-elementos/index.html" class="boton">Ver Proyecto</a>
+</div>
+
+<div class="tarjeta" data-nombre="formulario controlado basico">
+    <div>
+        <h2>10. Formulario Controlado</h2>
+        <p>Sincronización en tiempo real de un input de texto con el estado local usando onChange.</p>
+    </div>
+    <a href="./10-formulario-basico/index.html" class="boton">Ver Proyecto</a>
+</div>
+
+
+<div class="tarjeta" data-nombre="subcomponentes anidados">
+    <div>
+        <h2>11. Subcomponentes Anidados</h2>
+        <p>Estructuración de interfaces dividiendo una vista compleja en múltiples subcomponentes.</p>
+    </div>
+    <a href="./11-subcomponentes/index.html" class="boton">Ver Proyecto</a>
+</div>
+
+<div class="tarjeta" data-nombre="uso de imagenes en carpeta public">
+    <div>
+        <h2>12. Imágenes en Carpeta Public</h2>
+        <p>Carga de recursos estáticos y multimedia utilizando la ruta pública del proyecto Vite.</p>
+    </div>
+    <a href="./12-imagenes-public/index.html" class="boton">Ver Proyecto</a>
+</div>
+
+<div class="tarjeta" data-nombre="estilos css en modules">
+    <div>
+        <h2>13. Estilos CSS Modules</h2>
+        <p>Encapsulamiento de hojas de estilo por componente para evitar colisiones de clases globales.</p>
+    </div>
+    <a href="./13-css-modules/index.html" class="boton">Ver Proyecto</a>
+</div>
+
+<div class="tarjeta" data-nombre="listas dinamicas con map">
+    <div>
+        <h2>14. Listas Dinámicas con Map</h2>
+        <p>Renderizado iterativo de arreglos de datos usando el método .map() y la propiedad key.</p>
+    </div>
+    <a href="./14-listas-map/index.html" class="boton">Ver Proyecto</a>
+</div>
+
+<div class="tarjeta" data-nombre="importacion de archivos json local">
+    <div>
+        <h2>15. Consumo de Archivo JSON Local</h2>
+        <p>Lectura y mapeo de una estructura de datos estática almacenada en un archivo .json local.</p>
+    </div>
+    <a href="./15-json-local/index.html" class="boton">Ver Proyecto</a>
+</div>
+
+
+<div class="tarjeta" data-nombre="introduccion a useeffect">
+    <div>
+        <h2>16. Introducción a useEffect</h2>
+        <p>Manejo de efectos secundarios y control del ciclo de vida básico de los componentes.</p>
+    </div>
+    <a href="./16-useEffect-basico/index.html" class="boton">Ver Proyecto</a>
+</div>
+
+<div class="tarjeta" data-nombre="reloj digital con intervalos">
+    <div>
+        <h2>17. Reloj Digital y Temporizador</h2>
+        <p>Uso avanzado de useEffect implementando setInterval y función de limpieza (cleanup).</p>
+    </div>
+    <a href="./17-reloj-intervalos/index.html" class="boton">Ver Proyecto</a>
+</div>
+
+<div class="tarjeta" data-nombre="consumo de api rest publica con fetch">
+    <div>
+        <h2>18. Consumo de API REST (Fetch)</h2>
+        <p>Conexión asíncrona a servidores externos al cargar la página para mostrar datos remotos.</p>
+    </div>
+    <a href="./18-api-fetch/index.html" class="boton">Ver Proyecto</a>
+</div>
+
+<div class="tarjeta" data-nombre="buscador en tiempo real con api">
+    <div>
+        <h2>19. Buscador en Tiempo Real con API</h2>
+        <p>Filtrado dinámico combinando eventos de input con datos obtenidos desde un servidor externo.</p>
+    </div>
+    <a href="./19-buscador-api/index.html" class="boton">Ver Proyecto</a>
+</div>
+
+<div class="tarjeta" data-nombre="paginacion de datos desde api">
+    <div>
+        <h2>20. Paginación de Datos React</h2>
+        <p>Implementación de botones de navegación (Anterior/Siguiente) para dividir resultados largos.</p>
+    </div>
+    <a href="./20-paginacion-react/index.html" class="boton">Ver Proyecto</a>
+</div>
+
+
+<div class="tarjeta" data-nombre="formulario multiapp con validacion">
+    <div>
+        <h2>21. Formulario con Validaciones</h2>
+        <p>Validación previa al envío (onSubmit) controlando múltiples campos en un objeto de estado.</p>
+    </div>
+    <a href="./21-formulario-validado/index.html" class="boton">Ver Proyecto</a>
+</div>
+
+<div class="tarjeta" data-nombre="introduccion a react router dom">
+    <div>
+        <h2>22. Introducción a React Router</h2>
+        <p>Configuración de rutas virtuales (BrowserRouter, Routes, Route) para simular navegación SPA.</p>
+    </div>
+    <a href="./22-react-router/index.html" class="boton">Ver Proyecto</a>
+</div>
+
+<div class="tarjeta" data-nombre="rutas dinamicas con useParams">
+    <div>
+        <h2>23. Rutas Dinámicas y Parámetros</h2>
+        <p>Captura de parámetros en la URL (useParams) para mostrar perfiles o detalles individuales.</p>
+    </div>
+    <a href="./23-rutas-dinamicas/index.html" class="boton">Ver Proyecto</a>
+</div>
+
+<div class="tarjeta" data-nombre="navegacion programatica con useNavigate">
+    <div>
+        <h2>24. Navegación Programática</h2>
+        <p>Redirección automática de usuarios mediante el hook useNavigate tras completar acciones.</p>
+    </div>
+    <a href="./24-navegacion-programatica/index.html" class="boton">Ver Proyecto</a>
+</div>
+
+<div class="tarjeta" data-nombre="layout anidado con outlet">
+    <div>
+        <h2>25. Layouts Anidados (Outlet)</h2>
+        <p>Creación de estructuras maestras (como barras de navegación fijas) compartidas entre páginas.</p>
+    </div>
+    <a href="./25-layouts-anidados/index.html" class="boton">Ver Proyecto</a>
+</div>
+
+
+<div class="tarjeta" data-nombre="introduccion a context api">
+    <div>
+        <h2>26. Introducción a Context API</h2>
+        <p>Creación de un contexto global para evitar el traspaso excesivo de props (prop drilling).</p>
+    </div>
+    <a href="./26-context-api/index.html" class="boton">Ver Proyecto</a>
+</div>
+
+<div class="tarjeta" data-nombre="carrito de compras con context api">
+    <div>
+        <h2>27. Carrito de Compras Global</h2>
+        <p>Gestión de estado global para agregar, eliminar y calcular totales de productos en tienda.</p>
+    </div>
+    <a href="./27-carrito-context/index.html" class="boton">Ver Proyecto</a>
+</div>
+
+<div class="tarjeta" data-nombre="uso de bootstrap tradicional en react">
+    <div>
+        <h2>28. Uso de Bootstrap Tradicional</h2>
+        <p>Integración y aplicación de clases CSS nativas de Bootstrap CDN en componentes React.</p>
+    </div>
+    <a href="./28-bootstrap-vanilla/index.html" class="boton">Ver Proyecto</a>
+</div>
+
+<div class="tarjeta" data-nombre="uso de react bootstrap componentes">
+    <div>
+        <h2>29. React Bootstrap Components</h2>
+        <p>Implementación de componentes estilizados nativos provenientes de la librería React Bootstrap.</p>
+    </div>
+    <a href="./29-react-bootstrap/index.html" class="boton">Ver Proyecto</a>
+</div>
+
+<div class="tarjeta" data-nombre="dashboard administrativo con libreria de diseño">
+    <div>
+        <h2>30. Dashboard Administrativo</h2>
+        <p>Diseño de un panel de control completo utilizando componentes modulares de diseño.</p>
+    </div>
+    <a href="./30-dashboard-ui/index.html" class="boton">Ver Proyecto</a>
+</div>
+
+
+<div class="tarjeta" data-nombre="conexion inicial con firebase sdk">
+    <div>
+        <h2>31. Conexión Inicial con Firebase</h2>
+        <p>Configuración y inicialización del SDK de Firebase en un proyecto moderno de Vite.</p>
+    </div>
+    <a href="./31-firebase-config/index.html" class="boton">Ver Proyecto</a>
+</div>
+
+<div class="tarjeta" data-nombre="firebase firestore leer datos">
+    <div>
+        <h2>32. Lectura de Base de Datos Firestore</h2>
+        <p>Consulta asíncrona de documentos e información almacenada en la nube de Firebase.</p>
+    </div>
+    <a href="./32-firebase-leer/index.html" class="boton">Ver Proyecto</a>
+</div>
+
+<div class="tarjeta" data-nombre="firebase firestore escribir datos crud">
+    <div>
+        <h2>33. Escritura y CRUD en Firestore</h2>
+        <p>Creación, actualización y eliminación de registros en tiempo real en la base de datos.</p>
+    </div>
+    <a href="./33-firebase-crud/index.html" class="boton">Ver Proyecto</a>
+</div>
+
+<div class="tarjeta" data-nombre="firebase autenticacion por correo y contraseña">
+    <div>
+        <h2>34. Autenticación por Correo (Firebase)</h2>
+        <p>Implementación de registro y inicio de sesión seguro para usuarios utilizando Firebase Auth.</p>
+    </div>
+    <a href="./34-firebase-auth-email/index.html" class="boton">Ver Proyecto</a>
+</div>
+
+<div class="tarjeta" data-nombre="firebase autenticacion con Google">
+    <div>
+        <h2>35. Autenticación con Google (Popup)</h2>
+        <p>Inicio de sesión rápido federado utilizando proveedor de cuenta de Google Auth.</p>
+    </div>
+    <a href="./35-firebase-auth-google/index.html" class="boton">Ver Proyecto</a>
+</div>
+
+
+<div class="tarjeta" data-nombre="rutas protegidas con firebase auth">
+    <div>
+        <h2>36. Rutas Protegidas (Auth Guard)</h2>
+        <p>Restricción de acceso a páginas internas solo para usuarios autenticados en el sistema.</p>
+    </div>
+    <a href="./36-rutas-protegidas/index.html" class="boton">Ver Proyecto</a>
+</div>
+
+<div class="tarjeta" data-nombre="subida de archivos a firebase storage">
+    <div>
+        <h2>37. Subida de Archivos a Storage</h2>
+        <p>Carga de imágenes y archivos multimedia locales directamente a los servidores de Firebase.</p>
+    </div>
+    <a href="./37-firebase-storage/index.html" class="boton">Ver Proyecto</a>
+</div>
+
+<div class="tarjeta" data-nombre="aplicacion notas en tiempo real cloud">
+    <div>
+        <h2>38. App de Notas en Tiempo Real</h2>
+        <p>Sistema completo de notas sincronizadas en la nube mediante listeners en tiempo real de Firestore.</p>
+    </div>
+    <a href="./38-app-notas-cloud/index.html" class="boton">Ver Proyecto</a>
+</div>
+
+<div class="tarjeta" data-nombre="ecommerce con firebase y carrito">
+    <div>
+        <h2>39. E-commerce Completo con Firebase</h2>
+        <p>Tienda virtual conectada a base de datos remota para catálogo, inventario y procesamiento.</p>
+    </div>
+    <a href="./39-ecommerce-firebase/index.html" class="boton">Ver Proyecto</a>
+</div>
+
+<div class="tarjeta" data-nombre="proyecto final integrador react firebase">
+    <div>
+        <h2>40. Proyecto Final Integrador</h2>
+        <p>Plataforma web avanzada combinando React Router, Context API, Firebase Auth, Firestore y Storage.</p>
+    </div>
+    <a href="./40-proyecto-integrador/index.html" class="boton">Ver Proyecto</a>
+</div>
+        <div class="sin-resultados" id="mensajeVacio">No se encontró ningún proyecto con ese nombre.</div>
+
+    </main>
+
+    <div class="paginacion-contenedor" id="controlesPaginacion">
+        <button class="btn-pagina" id="btnAnterior" onclick="cambiarPagina(-1)">Anterior</button>
+        <span class="info-pagina" id="infoPagina">Página 1 de 1</span>
+        <button class="btn-pagina" id="btnSiguiente" onclick="cambiarPagina(1)">Siguiente</button>
+    </div>
+
+    <script>
+        let paginaActual = 1;
+        const elementosPorPagina = 6; // Estricto: exactamente una publicación por página
+
+        function filtrarYPaginar() {
+            const input = document.getElementById('buscador').value.toLowerCase();
+            const tarjetas = document.querySelectorAll('.tarjeta');
+            const mensajeVacio = document.getElementById('mensajeVacio');
+            const controlesPaginacion = document.getElementById('controlesPaginacion');
+
+            // 1. Filtrar las tarjetas que coinciden con la búsqueda
+            let tarjetasFiltradas = [];
+            tarjetas.forEach(tarjeta => {
+                const nombreProyecto = tarjeta.getAttribute('data-nombre');
+                if (nombreProyecto.includes(input)) {
+                    tarjetasFiltradas.push(tarjeta);
+                }
+            });
+
+            // 2. Controlar si hay resultados de búsqueda
+            if (tarjetasFiltradas.length === 0) {
+                mensajeVacio.style.display = "block";
+                controlesPaginacion.style.display = "none";
+                tarjetas.forEach(t => t.style.display = "none");
+                return;
+            } else {
+                mensajeVacio.style.display = "none";
+                controlesPaginacion.style.display = "flex";
+            }
+
+            // 3. Ajustar la página actual si excede el nuevo total filtrado
+            const totalPaginas = Math.ceil(tarjetasFiltradas.length / elementosPorPagina);
+            if (paginaActual > totalPaginas) {
+                paginaActual = 1;
+            }
+
+            // 4. Ocultar todas las tarjetas primero
+            tarjetas.forEach(t => t.style.display = "none");
+
+          // 5. Mostrar únicamente el grupo de tarjetas correspondiente a la página actual
+    const indiceInicio = (paginaActual - 1) * elementosPorPagina;
+    const indiceFin = indiceInicio + elementosPorPagina;
+
+    // Recorremos las tarjetas filtradas y mostramos solo las que están en el rango de la página actual
+    for (let i = 0; i < tarjetasFiltradas.length; i++) {
+        if (i >= indiceInicio && i < indiceFin) {
+            tarjetasFiltradas[i].style.display = "flex";
+        } else {
+            tarjetasFiltradas[i].style.display = "none";
+        }
+    }
+
+            // 6. Actualizar los textos y estados de los botones de paginación
+            document.getElementById('infoPagina').innerText = `Página ${paginaActual} de ${totalPaginas}`;
+            document.getElementById('btnAnterior').disabled = (paginaActual === 1);
+            document.getElementById('btnSiguiente').disabled = (paginaActual === totalPaginas);
+        }
+
+        function cambiarPagina(direccion) {
+            const input = document.getElementById('buscador').value.toLowerCase();
+            const tarjetas = document.querySelectorAll('.tarjeta');
+            let tarjetasFiltradas = Array.from(tarjetas).filter(t => t.getAttribute('data-nombre').includes(input));
+            
+            const totalPaginas = Math.ceil(tarjetasFiltradas.length / elementosPorPagina);
+
+            paginaActual += direccion;
+
+            if (paginaActual < 1) {
+                paginaActual = 1;
+            } else if (paginaActual > totalPaginas) {
+                paginaActual = totalPaginas;
+            }
+
+            filtrarYPaginar();
+        }
+
+        // Ejecutar al cargar la página por primera vez
+        window.onload = function() {
+            filtrarYPaginar();
+        };
+    </script>
+
+</body>
+</html>
